@@ -1,10 +1,13 @@
 package com.example.ud26_4_investigadores.dto;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,10 +17,14 @@ public class Investigador {
 	// Attributes/Columns
 
 	@Id
-	private String dni;
+	private Long dni;
 
 	@Column(name = "nom_apels")
 	private String nomApels;
+	
+	@OneToMany
+	@JoinColumn(name = "investigador_dni")
+	private List<Reserva> reserva;
 
 	@ManyToOne
 	@JoinColumn(name = "facultad_codigo")
@@ -35,7 +42,7 @@ public class Investigador {
 	 * @param nomApels
 	 * @param facultad
 	 */
-	public Investigador(String dni, String nomApels, Facultad facultad) {
+	public Investigador(Long dni, String nomApels, Facultad facultad) {
 		super();
 		this.dni = dni;
 		this.nomApels = nomApels;
@@ -45,14 +52,14 @@ public class Investigador {
 	/**
 	 * @return the dni
 	 */
-	public String getDni() {
+	public Long getDni() {
 		return dni;
 	}
 
 	/**
 	 * @param dni the dni to set
 	 */
-	public void setDni(String dni) {
+	public void setDni(Long dni) {
 		this.dni = dni;
 	}
 
@@ -73,6 +80,7 @@ public class Investigador {
 	/**
 	 * @return the facultad
 	 */
+//	@JsonIgnore
 	public Facultad getFacultad() {
 		return facultad;
 	}
